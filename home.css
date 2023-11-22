@@ -36,6 +36,7 @@
 }
 ul{
     list-style-type: none;
+    margin-top: 1rem;
 }
 
 
@@ -115,7 +116,16 @@ a img{
     align-items: center;
     margin: 1rem;
 }
-
+.buttons a{
+    font-size: small;
+    padding: 12.5px;
+    border-color: transparent;
+    margin: 0.1rem;
+    width: 9rem;
+    background-color:rgba(9, 169, 103, 0.737);
+    color: black;
+    cursor: pointer;
+}
 .buttons button{ 
     padding: 12.5px;
     border-color: transparent;

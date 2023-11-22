@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="boxicons/css/boxicons.min.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="home.css">
+    <title>Brgy Docu-Request</title>
+    <link rel="icon" type="image/x-icon" href="LOGO.png">
+</head>
+<body>
+
+ <div class="wrapper">
+    <nav class="nav">
+        <div class="nav-logo">
+            <img src="LOGO.png" style="width: 180px;height:180px;">  
+            
+        </div>
+        <div class="nav-button">
+            <button class="btn white-btn" id="loginBtn" onclick="login()">Sign In</button>
+            <button class="btn" id="registerBtn" onclick="register()">Sign Up</button>
+        </div>
+    </nav>
+
+<!----------------------------- Form box ----------------------------------->    
+    <div class="form-box">
+        
+        <!------------------- login form -------------------------->
+
+        <div class="login-container" id="login">
+            <div class="top">
+                <span>Don't have an account? <a href="#" onclick="register()">Sign Up</a></span>
+                <header>Login</header>
+            </div>
+            <div class="input-box">
+                <input type="email" class="input-field" id="userEmailSignIn" placeholder="Email">
+                <i class="bx bx-user"></i>
+            </div>
+            <div class="input-box">
+                <input type="password" class="input-field" id="userPasswordSignIn" placeholder="Password">
+                <i class="bx bx-lock-alt"></i>
+            </div>
+            <div class="input-box">
+                <input type="submit" class="submit" id="signInButton" value="Sign In">
+            </div>
+            
+        </div>
+
+        <!------------------- registration form -------------------------->
+        <div class="register-container" id="register">
+            <div class="top">
+                <span>Have an account? <a href="#" onclick="login()">Login</a></span>
+                <header>Sign Up</header>
+            </div>
+            <div class="two-forms">
+                <div class="input-box">
+                    <input type="text" class="input-field" id="firstname" placeholder="Firstname">
+                    <i class="bx bx-user"></i>
+                </div>
+                <div class="input-box">
+                    <input type="text" class="input-field" id="lastname" placeholder="Lastname">
+                    <i class="bx bx-user"></i>
+                </div>
+            </div>
+            <div class="input-box">
+                <input type="email" class="input-field" id="userEmailSignUp" placeholder="Email">
+                <i class="bx bx-envelope"></i>
+            </div>
+            <div class="input-box">
+                <input type="password" class="input-field" id="userPasswordSignUp" placeholder="Password">
+                <i class="bx bx-lock-alt"></i>
+                </div>
+                <div class="input-box">
+                    <input type="submit" class="submit" id="signUpButton" value="Register">
+                </div>
+            </div>
+        </div>
+<!--text box-->
+         <div class="textDisplay">
+            <span style="font-size: 30px;">Welcome to Brgy. Camaman-an <br>Document Request</br></span>
+            <span style="color: yellow;">Get your <b>Cedula, Certificate, Clearance</b> online</span> 
+         </div>
+
+
+    </div>   
+
+<script type="module" src="login.js"></script>
+
+
+
+</body>
+</html>
