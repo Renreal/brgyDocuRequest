@@ -1,0 +1,198 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+*{  
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  body {
+    background: url("bg1.jpg");  
+    background-size: cover;
+    background-repeat: no-repeat; 
+    overflow: hidden;
+   
+  }
+.wrapper{
+    background-color: rgba(6, 120, 76, 0.737);
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    overflow: auto;
+}
+.dashboard-wrapper{
+    background-color: rgba(249, 253, 251, 0.737);
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    overflow: auto;
+}
+.dashboard-contents{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: row;
+    margin: 0rem;
+    height: 100vh;
+}
+ul{
+    list-style-type: none;
+}
+
+
+
+.navbar{
+    background-color: aliceblue;
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    justify-content: space-between;
+    align-items: center;
+}
+.logo{
+    position: relative;
+    top: 5px;   
+}
+
+.logo img{
+    width: 4rem;
+    margin-left: 1rem;
+}
+.navbar a{
+    text-decoration: none;
+    margin: 1rem;
+    color: black;
+}
+a img{
+    position: relative;
+    width: 2rem;
+    top: 0.5rem;
+
+}
+.navbar a:hover{
+    color: rgba(6, 120, 76, 0.737);
+}
+.main-items{        
+    margin: 8rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+}
+.container1{
+    text-align: center;
+    text-transform: capitalize;
+    color: aliceblue;
+    /*   */
+    width: fit-content  ;   
+}
+.container1 h1{
+    font-size: xxx-large;
+}
+.container1 p{
+    font-size: large;
+    text-align: center;
+    margin-top: inherit;
+}
+.container2{
+    background-color: rgba(8, 109, 67, 0.737) ;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: white;
+    margin: 5rem;
+}
+.container2 span{
+    font-size: 30px;
+    text-transform: uppercase;
+}
+.buttons{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 1rem;
+}
+
+.buttons button{ 
+    padding: 12.5px;
+    border-color: transparent;
+    margin: 0.1rem;
+    width: 9rem;
+}
+button:hover{
+    background-color:aliceblue;
+}
+
+.c1 span{
+    font-size: 2.5rem;
+    text-transform: capitalize;
+    font-weight: bold;
+}
+.c2{
+    background-color: wheat;
+    padding: 2rem;
+    text-transform: capitalize;
+}
+#data-display{
+    background-color: aliceblue;
+    padding: 1rem;
+    height: 50vh;
+    overflow: auto; 
+}
+#data-display p{
+    color:green;
+    text-transform: capitalize;
+}
+.dataContainer{
+    margin: 4rem 1rem;
+}
+.title{
+   
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 1.5rem;
+}
+.header{
+    background-color: black;
+    color: aliceblue;
+    text-transform: uppercase;
+    padding: 0.5rem;
+}
+
+
+
+.footer{
+    color: whitesmoke;
+    background-color: black;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.divider{
+    display: flex;
+    justify-content: space-between;
+}
+.about-us{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    margin-left: 1rem;
+    width: 50%;
+    text-align: center;
+}
+.footer p{
+ width:23rem;
+}
+.footer span{
+    margin: 1.2rem;
+    text-align: center;
+}
+.copyright{
+    margin-top: 2rem;
+}

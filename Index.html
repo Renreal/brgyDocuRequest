@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="boxicons/css/boxicons.min.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="index.css">
+    <title>Brgy Docu-Request</title>
+    <link rel="icon" type="image/x-icon" href="LOGO.png">
+</head>
+<body>
+
+ <div class="wrapper">
+    <nav class="nav">
+        <div class="nav-logo">
+            <img src="LOGO.png" style="width: 180px;height:180px;">  
+            
+        </div>
+        <div class="nav-button">
+            <button class="btn white-btn" id="loginBtn" onclick="login()">Sign In</button>
+            <button class="btn" id="registerBtn" onclick="register()">Sign Up</button>
+        </div>
+    </nav>
+
+<!----------------------------- Form box ----------------------------------->    
+    <div class="form-box">
+        
+        <!------------------- login form -------------------------->
+
+        <div class="login-container" id="login">
+            <div class="top">
+                <span>Don't have an account? <a href="#" onclick="register()">Sign Up</a></span>
+                <header>Login</header>
+            </div>
+            <div class="input-box">
+                <input type="email" class="input-field" id="userEmailSignIn" placeholder="Email">
+                <i class="bx bx-user"></i>
+            </div>
+            <div class="input-box">
+                <input type="password" class="input-field" id="userPasswordSignIn" placeholder="Password">
+                <i class="bx bx-lock-alt"></i>
+            </div>
+            <div class="input-box">
+                <input type="submit" class="submit" id="signInButton" value="Sign In">
+            </div>
+            
+        </div>
+
+        <!------------------- registration form -------------------------->
+        <div class="register-container" id="register">
+            <div class="top">
+                <span>Have an account? <a href="#" onclick="login()">Login</a></span>
+                <header>Sign Up</header>
+            </div>
+            <div class="two-forms">
+                <div class="input-box">
+                    <input type="text" class="input-field" id="firstname" placeholder="Firstname">
+                    <i class="bx bx-user"></i>
+                </div>
+                <div class="input-box">
+                    <input type="text" class="input-field" id="lastname" placeholder="Lastname">
+                    <i class="bx bx-user"></i>
+                </div>
+            </div>
+            <div class="input-box">
+                <input type="email" class="input-field" id="userEmailSignUp" placeholder="Email">
+                <i class="bx bx-envelope"></i>
+            </div>
+            <div class="input-box">
+                <input type="password" class="input-field" id="userPasswordSignUp" placeholder="Password">
+                <i class="bx bx-lock-alt"></i>
+                </div>
+                <div class="input-box">
+                    <input type="submit" class="submit" id="signUpButton" value="Register">
+                </div>
+            </div>
+        </div>
+<!--text box-->
+         <div class="textDisplay">
+            <span style="font-size: 30px;">Welcome to Brgy. Camaman-an <br>Document Request</br></span>
+            <span style="color: yellow;">Get your <b>Cedula, Certificate, Clearance</b> online</span> 
+         </div>
+
+
+    </div>   
+
+
+<script>
+
+    var a = document.getElementById("loginBtn");
+    var b = document.getElementById("registerBtn");
+    var x = document.getElementById("login");
+    var y = document.getElementById("register");
+
+    function login() {
+        x.style.left = "4px";
+        y.style.right = "-520px";
+        a.className += " white-btn";
+        b.className = "btn";
+        x.style.opacity = 1;
+        y.style.opacity = 0;
+    }
+
+    function register() {
+        x.style.left = "-510px";
+        y.style.right = "5px";
+        a.className = "btn";
+        b.className += " white-btn";
+        x.style.opacity = 0;
+        y.style.opacity = 1;
+    }
+
+</script>
+
+
+<script type="module">
+                // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.3.1/firebase-app.js";
+                import { 
+                    getAuth,
+                    createUserWithEmailAndPassword,
+                    signInWithEmailAndPassword,
+                    onAuthStateChanged,
+                    signOut
+                } from "https://www.gstatic.com/firebasejs/10.3.1/firebase-auth.js";
+                import {
+                    getFirestore,
+                    collection,
+                    addDoc,
+                    } from 'https://www.gstatic.com/firebasejs/10.3.1/firebase-firestore.js';
+        
+// Your web app's Firebase configuration
+                const firebaseConfig = {
+                  apiKey: "AIzaSyDHWn2BsQUOLs4LdGeRwY9HqL-t9zlYEjQ",
+                  authDomain: "authfun-b2577.firebaseapp.com",
+                  projectId: "authfun-b2577",
+                  storageBucket: "authfun-b2577.appspot.com",
+                  messagingSenderId: "130874970746",
+                  appId: "1:130874970746:web:3952d2f045e4905af361c3"
+                };
+                
+                
+                // Initialize Firebase
+                   const app = initializeApp(firebaseConfig);
+                    const auth = getAuth(app);
+                    const db = getFirestore(app);
+
+
+
+                    const userEmailSignIn = document.querySelector("#userEmailSignIn"); 
+                    const userEmailSignUp = document.querySelector("#userEmailSignUp"); 
+                    const userPasswordSignIn = document.querySelector("#userPasswordSignIn");
+                    const userPasswordSignUp = document.querySelector("#userPasswordSignUp");
+                    const signUpButton = document.querySelector('#signUpButton');
+                    const signInButton = document.querySelector('#signInButton');
+                    const dashboard = document.querySelector('#dashboard');
+                    
+//////////user sign up========================================
+                    const userSignUp = async () => {
+                    try {
+                        const signUpEmail = userEmailSignUp.value;
+                        const signUpPassword = userPasswordSignUp.value;
+                        const firstName = document.querySelector("#firstname").value;
+                        const lastName = document.querySelector("#lastname").value;
+                // Create a user with email and password
+                        const userCredential = await createUserWithEmailAndPassword(auth, signUpEmail, signUpPassword);
+                        
+                        const user = userCredential.user;
+                         const userId = user.uid;
+                  // Store user data including first name and last name in Firestore
+                        
+                        const userDocRef = await addDoc(collection(db, 'userRecords'), {
+                        email: signUpEmail,
+                        name: firstName,
+                        lastname: lastName,
+                        userId: userId
+                        });
+
+                        location.replace("LandingPage.html");
+                    }
+                     catch (error) {
+                        // Handle the error
+                        const errorCode = error.code;
+                        const errorMessage = error.message;
+                        console.log(error);
+                        if (errorCode === "auth/email-already-in-use") {
+                        alert("This email address is already in use. Please choose a different email address.");
+                        } else {
+                        alert("Error: " + errorMessage);
+                        console.log(errorCode + errorMessage);
+                        }
+                    }
+                    };
+
+
+
+                
+//=======user sign IN=============//
+
+
+
+            const userSignIn = async() => {
+            const signInEmail = userEmailSignIn.value;
+            const signInPassword = userPasswordSignIn.value;
+            signInWithEmailAndPassword(auth, signInEmail, signInPassword)
+            .then((userCredential) => { 
+                const user = userCredential.user;
+                alert("You have signed in successfully!");
+                location.replace("LandingPage.html");
+            })
+            .catch((error) =>{
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                console.log(errorCode + errorMessage)
+
+                if(errorCode === "auth/invalid-email"){
+                    alert("Please enter a valid email");
+                    }
+                if(errorCode=== "auth/wrong-password"){
+                    alert("You have entered a wrong password")
+                }
+                    else{
+                    alert("error" + errorMessage);
+                    console.log(errorCode + errorMessage)
+                    } 
+            });
+            }
+
+                       
+            signUpButton.addEventListener('click', userSignUp);
+            signInButton.addEventListener('click', userSignIn);
+           
+</script>
+
+
+</body>
+</html>
