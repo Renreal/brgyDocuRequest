@@ -31,61 +31,36 @@
 
       // Get a reference to the "Account Transaction" button
       const dashboardButton = document.querySelector('.Dashboard'); 
-      const signOutButton = document.querySelector('#signOutButton');
-      const buttons = document.querySelectorAll('button[data-value]');
-      const navItemsContainer = document.getElementById('navItems');
 
-
-                // Function to update the navigation items based on user authentication state
-        const updateNavItems = (user) => {
-            if (user) {
-                // User is logged in
-                navItemsContainer.innerHTML = `
-                    <a href="#about">About Us</a>
-                    <a href="#">Brgy Updates</a>
-                    <a href="#">Services</a>
-                    <a id="signOutButton">Sign Out</a>
-                `;
-                const signOutButton = document.getElementById('signOutButton');
-                signOutButton.addEventListener('click', userSignout);
-            } else {
-                // User is logged out
-                navItemsContainer.innerHTML = `
-                    <a href="#about">About Us</a>
-                    <a href="#">Brgy Updates</a>
-                    <a href="#">Services</a>
-                    <a href="/Index.html">Login</a>
-                    <a href="/Index.html">Signup</a>
-                    <a href="/Index.html">Admin</a>
-                `;
-            }
-        };
-
-
-
-      // Add an event listener to the button
-      dashboardButton.addEventListener('click', () => {
-        // Redirect to dashboard.html
-        window.location.href = 'newDashboard.html';
-      });
       
-                
-                
-                //signout
-                const userSignout =async() => {
-                            await signOut(auth);
-                    }
-                   
-                    
-
+    
+                                    
                 //tracks the user's st wether they are logged in or logged out
                 const checkAuthState = async() => { 
-                                onAuthStateChanged(auth, user => {
-                                    updateNavItems(user);
+                                onAuthStateChanged(auth, user => {                      
                                     if(user){
                                       console.log("User is logged in");
-                                        }
-                                        else{
+                                        dashboardButton.addEventListener('click', () => {
+                                        window.location.href = 'newDashboard.html';
+                                      });
+
+                                // Declare a variable to store the current button value
+                                let currentButtonValue;
+
+                                // Function to store order
+                                document.querySelectorAll('.buttons button').forEach(button => {
+                                    button.addEventListener('click', () => {
+                                        currentButtonValue = button.getAttribute('data-value');
+
+                                        // Set the buttonValue as a data attribute of the confirmationModal
+                                        document.getElementById('confirmationModal').setAttribute('data-button-value', currentButtonValue);
+
+                                        // Show the modal
+                                        showModal();
+                                    });
+                                });
+                                      }
+                                        else{                              
                                           console.log("user logged out");
                                         }
                                 }) 
@@ -94,53 +69,67 @@
                             checkAuthState(); 
 
 
+// Event listener for the "Yes" button in the modal
+document.getElementById('yesButton').addEventListener('click', async () => {
+    // Get the buttonValue from the data attribute
+    const buttonValue = document.getElementById('confirmationModal').getAttribute('data-button-value');
 
-// function to store order
-                     
-                      buttons.forEach(button => {
-                        button.addEventListener('click', async () => {
-                          // Get the value of the clicked button
-                          const buttonValue = button.getAttribute('data-value');
-                          
-                          try {
-                            // Get the currently logged-in user
-                            const user = auth.currentUser;
-                            
-                          if (user) {
-                          // Store the button value in Firestore subcollection
-                          const userId = user.uid;
-                          // Reference to the parent document
-                          const parentDocRef = doc(db, 'userRecords', userId);
-                          
-                          // Reference to the subcollection within the parent document
-                          const subcollectionRef = collection(parentDocRef, 'history'); 
-                          await addDoc(subcollectionRef, {
-                            value: buttonValue,
-                            timestamp: new Date(),
-                            status: 'pending', //  add a timestamp if needed
-                          });          
-                              // Redirect to the link associated with the button
-                              const link = button.getAttribute('data-link');
-                              if (link) {
-                               // window.location.href = link;
-                               console.log("you clicked" + link);
-                              }
-                              
-                              // Display a success message
-                              console.log(`Button value "${buttonValue}" has been stored in Firestore`);
-                            } else {
-                              // User is not logged in, handle accordingly
-                              alert('Please log in to place your order.');
-                            }
-                          } catch (error) {
-                            // Handle any errors
-                            console.error(error);
-                            alert('Error storing button value in Firestore.');
-                          }
-                        }); 
-                      });
-   
+    try {
+        // Get the currently logged-in user
+        const user = auth.currentUser;
 
-    
-  
+        if (user) {
+            // Store the button value in Firestore subcollection
+            const userId = user.uid;
+            // Reference to the parent document
+            const parentDocRef = doc(db, 'userRecords', userId);
+            // Reference to the subcollection within the parent document
+            const subcollectionRef = collection(parentDocRef, 'history');
+            await addDoc(subcollectionRef, {
+                value: buttonValue,
+                timestamp: new Date(),
+                status: 'pending',
+            });
+
+            // Redirect to the link associated with the button
+            const link = document.querySelector(`[data-value="${buttonValue}"]`).getAttribute('data-link');
+            if (link) {
+                // window.location.href = link;
+                console.log("You clicked " + link);
+            }
+
+            // Display a success message
+            console.log(`Button value "${buttonValue}" has been stored in Firestore`);
+        } else {
+            // User is not logged in, handle accordingly
+            alert('Please log in to place your order.');
+        }
+    } catch (error) {
+        // Handle any errors
+        console.error(error);
+        alert('Error storing button value in Firestore.');
+    }
+
+    // Hide the modal
+    hideModal();
+});
+
+// Event listener for the "No" button in the modal
+document.getElementById('noButton').addEventListener('click', () => {
+    // Hide the modal without taking any action
+    hideModal();
+});
+
+// Function to show the modal and overlay
+function showModal() {
+    document.getElementById('confirmationModal').style.display = 'block';
+    document.getElementById('overlay').style.display = 'block';
+}
+
+// Function to hide the modal and overlay
+function hideModal() {
+    document.getElementById('confirmationModal').style.display = 'none';
+    document.getElementById('overlay').style.display = 'none';
+}
+
     

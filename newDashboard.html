@@ -42,11 +42,13 @@
           
         <!-- to pick-up -->
                     <div class="c2">
-                        <h1>Date:</h1>
-                        <h2>Ready for pick-up</h2>
+                        <h1 id="Date"></h1>
+                        <div class="pickupContainer">
+                            <h2>Ready for pick-up</h2>
                         <div id="document-value"><!-- display here the documents that are ready for pick-up --></div>
                         <p id="amount"><!-- amount here --></p>
-                        <p>calendar here:</p>
+                        <input type="date" id="calendar">
+                        </div>   
                     </div>
         </div>
 
@@ -80,10 +82,7 @@
 
 
 
-
-<script type="module" src="dashboard-script.js">
-
-
-</script>
+<script type="module" src="nav.js"></script>
+<script type="module" src="dashboard-script.js"></script>
 </body>
 </html>

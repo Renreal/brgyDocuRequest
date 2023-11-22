@@ -36,13 +36,29 @@
                 <span>What document do you like to request?</span>
                 <p>(unsa nga documento ang imong kinahanglan?)</p>
                 <div class="buttons">
-                    <button class="cedula" data-value="Cedula" data-link="https://forms.gle/T3QnK4ZdrRJyjtVS9/">Brgy Cedula</button>
-                    <button class="certificate" data-value="Certificate" data-link="https://forms.gle/yPHgkEGcvVvQKe648" >Brgy Certificate</button>
-                    <button class="clearance" data-value="Clearance" data-link="https://forms.gle/pfC9CwiARWsvpcdL8">Brgy Clearance</button>        
+                    <button id="confirmationButton1" class="cedula" data-value="Cedula" data-link="https://forms.gle/T3QnK4ZdrRJyjtVS9/">Brgy Cedula</button>
+                    <button id="confirmationButton2" class="certificate" data-value="Certificate" data-link="https://forms.gle/yPHgkEGcvVvQKe648" >Brgy Certificate</button>
+                    <button id="confirmationButton3" class="clearance" data-value="Clearance" data-link="https://forms.gle/pfC9CwiARWsvpcdL8">Brgy Clearance</button>        
                     <button class="Dashboard">Transactions</button>
-                </div>
+                </div>  
+
             </div>
+ <!-- Modal HTML -->
+                <div id="confirmationModal">
+                    <p>You are about to place an order</p>
+                    <div class="modalBtn">
+                           <button id="yesButton">confirm</button>
+                    <button id="noButton">cancel</button>
+                    </div>
+                 
+                </div>
+                <!-- Overlay background -->
+                <div id="overlay"></div>
+
         </div>
+        
+
+
 
 <!-- Footer Section -->
         <div class="footer">
@@ -72,5 +88,6 @@
     </div>
 
 <script type="module" src="auth-state.js"></script>      
+<script type="module" src="nav.js"></script>      
 </body>
 </html>

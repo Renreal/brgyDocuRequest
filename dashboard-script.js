@@ -1,4 +1,3 @@
-
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.3.1/firebase-app.js";
 import { 
@@ -34,53 +33,16 @@ const db = getFirestore(app);
 const firstNameElement = document.getElementById('firstName');
 
 
-
-const navItemsContainer = document.getElementById('navItems');
-
-
-                // Function to update the navigation items based on user authentication state
-        const updateNavItems = (user) => {
-            if (user) {
-                // User is logged in
-                navItemsContainer.innerHTML = `
-                    <a href="#about">About Us</a>
-                    <a href="#">Brgy Updates</a>
-                    <a href="/LandingPage.html">Services</a>
-                    <a id="signOutButton">Sign Out</a>
-                    <a href="newDashboard.html"><img src="personIcon.svg"></a>
-                `;
-                const signOutButton = document.getElementById('signOutButton');
-                signOutButton.addEventListener('click', userSignout);
-            } else {
-                // User is logged out
-                navItemsContainer.innerHTML = `
-                    <a href="#about">About Us</a>
-                    <a href="#">Brgy Updates</a>
-                    <a href="/Index.html">Services</a>
-                    <a href="/Index.html">Login</a>
-                    <a href="/Index.html">Signup</a>
-                    <a href="/Index.html">Admin</a>
-                `;
-            }
-        };
-
-        
-                //signout
-                const userSignout =async() => {
-                    await signOut(auth);
-            }
-
 //tracks the user's st wether they are logged in or logged out
 const checkAuthState = async() => { 
            onAuthStateChanged(auth, user => {
-            updateNavItems(user);
                if(user){
                  //viewTransactionButton.addEventListener('click', displayCurrentUserData);
                  console.log("User is logged in");
                  displayCurrentUserData();
                    }
                    else{
-                   location.replace("index.html");
+                   location.replace("LandingPage.html");
                      console.log("user logged out");
                    }
            }) 
@@ -127,16 +89,22 @@ querySnap.forEach((doc) => {
      let totalAmount = 50; 
      const claim = document.createElement('p');
      const amount = document.getElementById('amount');
+     const claimDate = document.getElementById('Date');
+     const calendarInput = document.getElementById('calendar');
 
+     
+     const currentDate = new Date();
+     const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+     claimDate.textContent = `${currentDate.toLocaleDateString(undefined, options)}`;
+     
+    const isoDateString = currentDate.toISOString().split('T')[0];
+    calendarInput.value = isoDateString;
+    
      claim.textContent = `- ${value}`;
      docValue.appendChild(claim);
 
      totalAmount += 50;
-     amount.textContent = 'To pay: '+ totalAmount + ' Pesos';
-    
-     
-
-
+     amount.textContent = 'To pay: '+ totalAmount + ' Pesos';   
     }
  
 
