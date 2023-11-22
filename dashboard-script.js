@@ -30,7 +30,8 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-
+// Reference to the container elements for displaying user data
+const firstNameElement = document.getElementById('firstName');
 
 
 
@@ -86,9 +87,7 @@ const checkAuthState = async() => {
        }
 
        checkAuthState(); 
-                     
-// Reference to the container elements for displaying user data
- const firstNameElement = document.getElementById('firstName');
+  
       
 
 // Function to fetch and display the current user's data
@@ -105,6 +104,7 @@ const subcollectionRef = collection(parentDocRef, 'history');
 const querySnap = await getDocs(subcollectionRef);
 
 const dataDisplay = document.getElementById('data-display'); // Get the HTML element
+const docValue = document.getElementById('document-value');
 
 querySnap.forEach((doc) => {
  const data = doc.data();
@@ -115,19 +115,42 @@ querySnap.forEach((doc) => {
  const dataElement = document.createElement('p');
  const date = document.createElement('p');
  const satus = document.createElement('p');
+ const divider = document.createElement('p');
+
  dataElement.textContent = `Document: ${value}`;
  satus.textContent = `Status: ${status}`;
  date.textContent = `Date: ${timestamp.toLocaleString()}`;
+ divider.textContent = `==============================`;
 
+//display the all document that has a value of ready for pickup
+ if (status === "ready for pickup"){
+     let totalAmount = 50; 
+     const claim = document.createElement('p');
+     const amount = document.getElementById('amount');
+
+     claim.textContent = `- ${value}`;
+     docValue.appendChild(claim);
+
+     totalAmount += 50;
+     amount.textContent = 'To pay: '+ totalAmount + ' Pesos';
+    
+     
+
+
+    }
+ 
 
  // Append the new data element to the data-display div
  dataDisplay.appendChild(dataElement);
  dataDisplay.appendChild(satus);
  dataDisplay.appendChild(date);
+ dataDisplay.appendChild(divider);
  
 });
 
+                   
 
+ 
 
 // Get the email of the current user
 const userEmail = user.email;
