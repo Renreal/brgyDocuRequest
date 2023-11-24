@@ -42,7 +42,7 @@ const checkAuthState = async() => {
                  displayCurrentUserData();
                    }
                    else{
-                   location.replace("LandingPage.html");
+                   location.replace("index.html");
                      console.log("user logged out");
                    }
            }) 

@@ -40,6 +40,24 @@
                     const signInButton = document.querySelector('#signInButton');
                     const dashboard = document.querySelector('#dashboard');
                     
+
+
+
+
+/* form transform */
+                    document.getElementById('signup-link').addEventListener('click', function () {
+                        document.querySelector('.form-container.register').style.display = 'contents';
+                        document.querySelector('.form-container:not(.register)').style.display = 'none';
+                    });
+            
+                    document.getElementById('login-link').addEventListener('click', function () {
+                        document.querySelector('.form-container.register').style.display = 'none';
+                        document.querySelector('.form-container:not(.register)').style.display = 'contents';
+                    });
+               
+
+
+
 //////////user sign up========================================
                     const userSignUp = async () => {
                     try {
@@ -47,17 +65,39 @@
                         const signUpPassword = userPasswordSignUp.value;
                         const firstName = document.querySelector("#firstname").value;
                         const lastName = document.querySelector("#lastname").value;
-                // Create a user with email and password
+                        const midName = document.querySelector("#middleName").value;
+                        const Age = document.querySelector("#Age").value;
+                        const Gender = document.querySelector("#Gender").value;
+                        const bday = document.querySelector("#birthday").value;
+                        const birthPlace = document.querySelector("#birthPlace").value;
+                        const address = document.querySelector("#Address").value;
+                        const Nationality = document.querySelector("#nationality").value;
+                        const status = document.querySelector("#status").value;
+                        const Occupation = document.querySelector("#Phone").value;
+                        const contact = document.querySelector("#Gender").value;
+// Create a user with email and password
                         const userCredential = await createUserWithEmailAndPassword(auth, signUpEmail, signUpPassword);
                         
                         const user = userCredential.user;
                          const userId = user.uid;
-                  // Store user data including first name and last name in Firestore
+
+// Store user data in Firestore
                         
                         const userDocRef = await addDoc(collection(db, 'userRecords'), {
                         email: signUpEmail,
                         name: firstName,
                         lastname: lastName,
+                        middlename: midName,
+                        age: Age,
+                        gender: Gender,
+                        birthday: bday,
+                        birth_place: birthPlace,
+                        address: address,
+                        Nationality: Nationality,
+                        status: status,
+                        work: Occupation,
+                        contactNum: contact,
+                        password: signUpPassword, 
                         userId: userId
                         });
                         alert("Registered Successfully!");
