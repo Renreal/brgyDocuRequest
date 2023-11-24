@@ -60,7 +60,7 @@
                         lastname: lastName,
                         userId: userId
                         });
-
+                        alert("Registered Successfully!");
                         location.replace("LandingPage.html");
                     }
                      catch (error) {
