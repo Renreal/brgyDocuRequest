@@ -38,16 +38,67 @@
                 <span>What document do you like to request?</span>
                 <p>(unsa nga documento ang imong kinahanglan?)</p>
                 <div class="buttons">
-                    <button id="confirmationButton1" class="cedula" data-value="Cedula" data-link="https://forms.gle/T3QnK4ZdrRJyjtVS9/">Brgy Cedula</button>
-                    <button id="confirmationButton2" class="certificate" data-value="Certificate" data-link="https://forms.gle/yPHgkEGcvVvQKe648" >Brgy Certificate</button>
-                    <button id="confirmationButton3" class="clearance" data-value="Clearance" data-link="https://forms.gle/pfC9CwiARWsvpcdL8">Brgy Clearance</button>        
-                    <a class="Dashboard">Transactions</a>
+                    
+                    <select id="selectOption">
+                        <option value="" selected disabled>Select an option</option>
+                        <option id="confirmationButton1"  value="https://forms.gle/T3QnK4ZdrRJyjtVS9/">Brgy Cedula</option>
+                        <option id="confirmationButton2"  value="https://forms.gle/yPHgkEGcvVvQKe648">Brgy Certificate</option>
+                        <option id="confirmationButton3" value="https://forms.gle/pfC9CwiARWsvpcdL8">Brgy Clearance</option>
+                    </select>
+
+
+
+                    <a class="place-order" id="dashboardLink">Place Order</a>
+
+                    
+
+
                 </div>  
 
             </div>
- <!-- Modal HTML -->
+ <!-- Modal HTML --> 
+ 
                 <div id="confirmationModal">
-                    <p>You are about to place an order</p>
+                    <p>Please confirm your details</p>
+                    <div class="account-details">
+                          <div class="userInfo">
+                            <p>firstname: </p><input type="text" id="firstName">
+                          </div>
+                          <div class="userInfo">
+                            <p>lastname: </p><input type="text" id="lastName">
+                          </div>
+                          <div class="userInfo">
+                            <p>middlename: </p><input type="text" id="middleName">
+                          </div>
+                          <div class="userInfo">
+                            <p>Age: </p><input type="text" id="Age">
+                          </div>
+                          <div class="userInfo">
+                            <p>Gender: </p><input type="text" id="Gender">
+                          </div>
+                          <div class="userInfo">
+                            <p>birthday: </p><input type="text" id="bday">
+                          </div>
+                          <div class="userInfo">
+                            <p>birth place: </p><input type="text" id="bplace">
+                          </div>
+                          <div class="userInfo">
+                            <p>Address: </p><input type="text" id="Address">
+                          </div>
+                          <div class="userInfo">
+                            <p>Nationality: </p><input type="text" id="Nationality">
+                          </div>
+                          <div class="userInfo">
+                            <p>status: </p><input type="text" id="status">
+                          </div>
+                          <div class="userInfo">
+                            <p>occupation: </p><input type="text" id="work">
+                          </div>
+                          <div class="userInfo">
+                            <p>contact number: </p><input type="text" id="contact">
+                          </div>
+                    </div>
+                  
                     <div class="modalBtn">
                     <button id="yesButton">confirm</button>
                     <button id="noButton">cancel</button>
@@ -78,8 +129,11 @@
                 </div>
                 <div class="about-us" id="about">
                     <span>ABOUT US</span>
-                    we are a group a group of 4th year computer engineering student conducting our capstone project
-                </div>
+                    This website aims to enhance the convenience of Barangay Camaman-an residents. 
+                    Requesting documents will be simplified as individuals can place orders online, 
+                    and officials will prepare the documents at their office. Residents will receive notifications 
+                    when their documents are ready for pickup.
+                    </div>
             </div>
 
             <div class="copyright">

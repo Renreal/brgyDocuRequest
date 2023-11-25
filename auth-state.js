@@ -29,8 +29,7 @@
                     const db = getFirestore(app);
 
 
-      // Get a reference to the "Account Transaction" button
-      const dashboardButton = document.querySelector('.Dashboard'); 
+      
 
       
     
@@ -40,96 +39,93 @@
                                 onAuthStateChanged(auth, user => {                      
                                     if(user){
                                       console.log("User is logged in");
-                                        dashboardButton.addEventListener('click', () => {
-                                        window.location.href = 'newDashboard.html';
-                                      });
-
-                                // Declare a variable to store the current button value
-                                let currentButtonValue;
-
-                                // Function to store order
-                                document.querySelectorAll('.buttons button').forEach(button => {
-                                    button.addEventListener('click', () => {
-                                        currentButtonValue = button.getAttribute('data-value');
-
-                                        // Set the buttonValue as a data attribute of the confirmationModal
-                                        document.getElementById('confirmationModal').setAttribute('data-button-value', currentButtonValue);
-
-                                        // Show the modal
-                                        showModal();
-                                    });
-                                });
-                                      }
-                                        else{                              
+                                        }
+                                        else{ 
+                                            window.location.href = 'index.html';                      
                                           console.log("user logged out");
                                         }
                                 }) 
                             }
-
                             checkAuthState(); 
 
 
-// Event listener for the "Yes" button in the modal
-document.getElementById('yesButton').addEventListener('click', async () => {
-    // Get the buttonValue from the data attribute
-    const buttonValue = document.getElementById('confirmationModal').getAttribute('data-button-value');
 
-    try {
-        // Get the currently logged-in user
-        const user = auth.currentUser;
-
-        if (user) {
-            // Store the button value in Firestore subcollection
-            const userId = user.uid;
-            // Reference to the parent document
-            const parentDocRef = doc(db, 'userRecords', userId);
-            // Reference to the subcollection within the parent document
-            const subcollectionRef = collection(parentDocRef, 'history');
-            await addDoc(subcollectionRef, {
-                value: buttonValue,
-                timestamp: new Date(),
-                status: 'pending',
-            });
-
-            // Redirect to the link associated with the button
-            const link = document.querySelector(`[data-value="${buttonValue}"]`).getAttribute('data-link');
-            if (link) {
-                // window.location.href = link;
-                console.log("You clicked " + link);
+ // Function to show the modal and overlay
+            function showModal() {
+                document.getElementById('confirmationModal').style.display = 'block';
+                document.getElementById('overlay').style.display = 'block';
             }
 
-            // Display a success message
-            console.log(`Button value "${buttonValue}" has been stored in Firestore`);
-        } else {
-            // User is not logged in, handle accordingly
-            alert('Please log in to place your order.');
-        }
-    } catch (error) {
-        // Handle any errors
-        console.error(error);
-        alert('Error storing button value in Firestore.');
-    }
+            // Function to hide the modal and overlay
+            function hideModal() {
+                document.getElementById('confirmationModal').style.display = 'none';
+                document.getElementById('overlay').style.display = 'none';
+            }
 
-    // Hide the modal
-    hideModal();
-});
+            document.getElementById('dashboardLink').addEventListener('click', showModal);        
+            
 
-// Event listener for the "No" button in the modal
-document.getElementById('noButton').addEventListener('click', () => {
-    // Hide the modal without taking any action
-    hideModal();
-});
 
-// Function to show the modal and overlay
-function showModal() {
-    document.getElementById('confirmationModal').style.display = 'block';
-    document.getElementById('overlay').style.display = 'block';
-}
 
-// Function to hide the modal and overlay
-function hideModal() {
-    document.getElementById('confirmationModal').style.display = 'none';
-    document.getElementById('overlay').style.display = 'none';
-}
 
+
+
+
+
+
+
+            // Event listener for the "Yes" button in the modal
+            document.getElementById('yesButton').addEventListener('click', async () => {
+                // Get the buttonValue from the data attribute
+                const buttonValue = document.getElementById('confirmationModal').getAttribute('data-button-value');
+
+                try {
+                    // Get the currently logged-in user
+                    const user = auth.currentUser;
+
+                    if (user) {
+                        // Store the button value in Firestore subcollection
+                        const userId = user.uid;
+                        // Reference to the parent document
+                        const parentDocRef = doc(db, 'userRecords', userId);
+                        // Reference to the subcollection within the parent document
+                        const subcollectionRef = collection(parentDocRef, 'history');
+                        await addDoc(subcollectionRef, {
+                            value: buttonValue,
+                            timestamp: new Date(),
+                            status: 'pending',
+                        });
+
+                        // Redirect to the link associated with the button
+                        const link = document.querySelector(`[data-value="${buttonValue}"]`).getAttribute('data-link');
+                        if (link) {
+                            // window.location.href = link;
+                            console.log("You clicked " + link);
+                        }
+
+                        // Display a success message
+                        console.log(`Button value "${buttonValue}" has been stored in Firestore`);
+                    } else {
+                        // User is not logged in, handle accordingly
+                        alert('Please log in to place your order.');
+                    }
+                } catch (error) {
+                    // Handle any errors
+                    console.error(error);
+                    alert('Error storing button value in Firestore.');
+                }
+
+                // Hide the modal
+                hideModal();
+            });
+
+            // Event listener for the "No" button in the modal
+            document.getElementById('noButton').addEventListener('click', () => {
+                // Hide the modal without taking any action
+                hideModal();
+            });
+
+
+
+           
     

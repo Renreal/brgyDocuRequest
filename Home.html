@@ -1,78 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Confirmation Popup</title>
-    <style>
-        /* Styling for the modal */
-        #confirmationModal {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: #fff;
-            padding: 20px;
-            border: 1px solid #ccc;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-            z-index: 1000;
-        }
-
-        /* Styling for the overlay background */
-        #overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            z-index: 999;
-        }
-    </style>
-</head>
-<body>
-
-<button id="confirmationButton">Click me</button>
-
-<!-- Modal HTML -->
-<div id="confirmationModal">
-    <p>Do you wish to proceed?</p>
-    <button id="yesButton">Yes</button>
-    <button id="noButton">No</button>
+<div class="dropdown">
+    <select id="selectOption">
+        <option value="" selected disabled>Select an option</option>
+        <option value="https://forms.gle/T3QnK4ZdrRJyjtVS9/">Brgy Cedula</option>
+        <option value="https://forms.gle/yPHgkEGcvVvQKe648">Brgy Certificate</option>
+        <option value="https://forms.gle/pfC9CwiARWsvpcdL8">Brgy Clearance</option>
+    </select>
+    <button onclick="redirectToSelected()">Go</button>
 </div>
 
-<!-- Overlay background -->
-<div id="overlay"></div>
-
 <script>
-    // Function to show the modal and overlay
-    function showModal() {
-        document.getElementById('confirmationModal').style.display = 'block';
-        document.getElementById('overlay').style.display = 'block';
+    function redirectToSelected() {
+        var selectBox = document.getElementById("selectOption");
+        var selectedValue = selectBox.options[selectBox.selectedIndex].value;
+        if (selectedValue) {
+            window.location.href = selectedValue;
+        }
     }
-
-    // Function to hide the modal and overlay
-    function hideModal() {
-        document.getElementById('confirmationModal').style.display = 'none';
-        document.getElementById('overlay').style.display = 'none';
-    }
-
-    // Event listener for the button click
-    document.getElementById('confirmationButton').addEventListener('click', showModal);
-
-    // Event listeners for the "Yes" and "No" buttons
-    document.getElementById('yesButton').addEventListener('click', function() {
-        alert('You clicked Yes!'); // Replace this with your logic
-        hideModal();
-    });
-
-    document.getElementById('noButton').addEventListener('click', function() {
-        alert('You clicked No!'); // Replace this with your logic
-        hideModal();
-    });
 </script>
-
-</body>
-</html>
