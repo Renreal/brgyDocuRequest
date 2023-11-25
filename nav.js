@@ -40,7 +40,7 @@ const navItemsContainer = document.getElementById('navItems');
                 // User is logged in
                 navItemsContainer.innerHTML = `
                     <a href="#about">About Us</a>
-                    <a href="#">Brgy Updates</a>
+                    <a href="newDashboard.html">Dashboard</a>
                     <a href="/LandingPage.html">Services</a>
                     <a id="signOutButton">Sign Out</a>
                     <a href="newDashboard.html"><img src="personIcon.svg"></a>

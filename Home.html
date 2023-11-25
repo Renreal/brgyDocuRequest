@@ -1,19 +1,21 @@
-<div class="dropdown">
-    <select id="selectOption">
-        <option value="" selected disabled>Select an option</option>
-        <option value="https://forms.gle/T3QnK4ZdrRJyjtVS9/">Brgy Cedula</option>
-        <option value="https://forms.gle/yPHgkEGcvVvQKe648">Brgy Certificate</option>
-        <option value="https://forms.gle/pfC9CwiARWsvpcdL8">Brgy Clearance</option>
-    </select>
-    <button onclick="redirectToSelected()">Go</button>
-</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<script>
-    function redirectToSelected() {
-        var selectBox = document.getElementById("selectOption");
-        var selectedValue = selectBox.options[selectBox.selectedIndex].value;
-        if (selectedValue) {
-            window.location.href = selectedValue;
-        }
-    }
-</script>
+</head>
+<body>
+    <form id="userForm">
+        <label for="club">club:</label>
+        <input type="text" id="club" name="name" required>
+
+        <label for="sports">sports:</label>
+        <input type="text[]" id="sports" required>
+
+        <button type="button" id="addUserButton">Add User</button>
+
+    </form>
+    <script type="module" src="delete.js"></script>
+</body>
+</html>

@@ -39,11 +39,11 @@
                 <p>(unsa nga documento ang imong kinahanglan?)</p>
                 <div class="buttons">
                     
-                    <select id="selectOption">
+                    <select id="selectOption" onchange="updateOrder()">
                         <option value="" selected disabled>Select an option</option>
-                        <option id="confirmationButton1"  value="https://forms.gle/T3QnK4ZdrRJyjtVS9/">Brgy Cedula</option>
-                        <option id="confirmationButton2"  value="https://forms.gle/yPHgkEGcvVvQKe648">Brgy Certificate</option>
-                        <option id="confirmationButton3" value="https://forms.gle/pfC9CwiARWsvpcdL8">Brgy Clearance</option>
+                        <option id="confirmationButton1"  value="Cedula">Brgy Cedula</option>
+                        <option id="confirmationButton2"  value="Certificate">Brgy Certificate</option>
+                        <option id="confirmationButton3" value="Clearance">Brgy Clearance</option>
                     </select>
 
 
@@ -60,41 +60,26 @@
  
                 <div id="confirmationModal">
                     <p>Please confirm your details</p>
+                    <p id="Order"></p>
                     <div class="account-details">
                           <div class="userInfo">
                             <p>firstname: </p><input type="text" id="firstName">
-                          </div>
-                          <div class="userInfo">
-                            <p>lastname: </p><input type="text" id="lastName">
-                          </div>
-                          <div class="userInfo">
+                            <p>lastname: </p><input type="text" id="lastName">                      
                             <p>middlename: </p><input type="text" id="middleName">
                           </div>
                           <div class="userInfo">
                             <p>Age: </p><input type="text" id="Age">
-                          </div>
-                          <div class="userInfo">
                             <p>Gender: </p><input type="text" id="Gender">
-                          </div>
-                          <div class="userInfo">
                             <p>birthday: </p><input type="text" id="bday">
                           </div>
                           <div class="userInfo">
-                            <p>birth place: </p><input type="text" id="bplace">
-                          </div>
-                          <div class="userInfo">
+                            <p>birth place: </p><input type="text" id="bplace">                
                             <p>Address: </p><input type="text" id="Address">
-                          </div>
-                          <div class="userInfo">
                             <p>Nationality: </p><input type="text" id="Nationality">
                           </div>
                           <div class="userInfo">
                             <p>status: </p><input type="text" id="status">
-                          </div>
-                          <div class="userInfo">
-                            <p>occupation: </p><input type="text" id="work">
-                          </div>
-                          <div class="userInfo">
+                            <p>occupation: </p><input type="text" id="work">                        
                             <p>contact number: </p><input type="text" id="contact">
                           </div>
                     </div>
@@ -143,6 +128,7 @@
         </div>
     </div>
 
+    
 <script type="module" src="auth-state.js"></script>      
 <script type="module" src="nav.js"></script>      
 </body>

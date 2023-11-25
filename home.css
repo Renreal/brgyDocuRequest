@@ -95,7 +95,7 @@ a img{
     text-align: center;
     margin-top: inherit;
 }
-.container2{
+.container2 {
     background-color: rgba(8, 109, 67, 0.737);
     display: flex;
     flex-direction: column;
@@ -107,6 +107,7 @@ a img{
     margin: 3.5rem;
     padding: 1rem;
 }
+
 .container2 span{
     font-size: 30px;
     text-transform: uppercase;
@@ -143,6 +144,7 @@ a img{
 /* confirmation modal */
 #confirmationModal {
     display: none;
+    margin: auto;
     position: fixed;
     top: 50%;
     left: 50%;
@@ -152,7 +154,13 @@ a img{
     border: 1px solid #ccc;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     z-index: 1000;
+    overflow: scroll;
+    overflow-x: scroll;
+    overflow-y: scroll;
+    width: 70vw;
+    height: 50vh;
 }
+
 
 /* Styling for the overlay background */
 #overlay {
@@ -218,12 +226,25 @@ a img{
     padding: 0.5rem;
 }
 
-.account-details{
+.account-details {
     display: flex;
-    flex-wrap: wrap;
     justify-content: space-evenly;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
+    /* margin: 1rem; */
+    margin-left: 0rem;
+    /* margin-top: 1rem; */
+    /* margin-bottom: 1rem; */
+    /* width: 5rem; */
+    /* overflow: scroll; */
+    flex-wrap: wrap;
+}
+
+
+.account-details input{
+   padding: 0.5rem;
+   border-color: black;
+}
+.userInfo {
+    margin: 1rem;
 }
 .modalBtn button{
     padding: 0.5rem;

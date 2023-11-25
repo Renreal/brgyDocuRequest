@@ -73,8 +73,8 @@
                         const address = document.querySelector("#Address").value;
                         const Nationality = document.querySelector("#nationality").value;
                         const status = document.querySelector("#status").value;
-                        const Occupation = document.querySelector("#Phone").value;
-                        const contact = document.querySelector("#Gender").value;
+                        const Occupation = document.querySelector("#Occupation").value;
+                        const contact = document.querySelector("#Phone").value;
 // Create a user with email and password
                         const userCredential = await createUserWithEmailAndPassword(auth, signUpEmail, signUpPassword);
                         
@@ -117,6 +117,8 @@
                     }
                     };
 
+                  
+
 
 
                 
@@ -155,3 +157,13 @@
             signUpButton.addEventListener('click', userSignUp);
             signInButton.addEventListener('click', userSignIn);
   
+
+
+
+
+
+
+
+
+
+            

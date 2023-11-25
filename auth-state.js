@@ -12,8 +12,12 @@
                     collection,
                     addDoc,
                     doc,
+                    getDocs,
+                    query,where,
                     } from 'https://www.gstatic.com/firebasejs/10.3.1/firebase-firestore.js';
-        
+                  
+                   
+
 // Your web app's Firebase configuration
                 const firebaseConfig = {
                   apiKey: "AIzaSyDHWn2BsQUOLs4LdGeRwY9HqL-t9zlYEjQ",
@@ -28,83 +32,119 @@
                     const auth = getAuth(app);
                     const db = getFirestore(app);
 
+                
 
-      
-
-      
-    
-                                    
-                //tracks the user's st wether they are logged in or logged out
-                const checkAuthState = async() => { 
-                                onAuthStateChanged(auth, user => {                      
-                                    if(user){
-                                      console.log("User is logged in");
-                                        }
-                                        else{ 
-                                            window.location.href = 'index.html';                      
-                                          console.log("user logged out");
-                                        }
-                                }) 
+                    const checkAuthState = async () => {
+                        onAuthStateChanged(auth, async (user) => {
+                            if (user) {
+                                console.log("Current user is", user);
+                    
+                                // Assuming you have a Firestore collection named 'userRecords'
+                                const usersCollection = collection(db, 'userRecords');
+                    
+                                // Query the collection based on the user's email
+                                const querySnapshot = await getDocs(query(usersCollection, where('email', '==', user.email)));
+                    
+                                // Check if there's a matching user
+                                if (querySnapshot.size > 0) {
+                                    // Update the input fields with the data of the matching user
+                                    querySnapshot.forEach((doc) => {
+                                        const userData = doc.data();
+                    
+                                        // Update input fields
+                                        document.getElementById('firstName').value = userData.name || '';
+                                        document.getElementById('lastName').value = userData.lastname || '';
+                                        document.getElementById('middleName').value = userData.middlename || '';
+                                        document.getElementById('Age').value = userData.age || '';
+                                        document.getElementById('Gender').value = userData.gender || '';
+                                        document.getElementById('bday').value = userData.birthday || '';
+                                        document.getElementById('bplace').value = userData.birth_place || '';
+                                        document.getElementById('Address').value = userData.address || '';
+                                        document.getElementById('Nationality').value = userData.Nationality || '';
+                                        document.getElementById('status').value = userData.status || '';
+                                        document.getElementById('work').value = userData.work || '';
+                                        document.getElementById('contact').value = userData.contactNum || '';
+                                    });
+                                } else {
+                                    console.log("No matching user found in Firestore");
+                                }
+                            } else {
+                                window.location.href = 'index.html';
+                                console.log("User logged out");
                             }
-                            checkAuthState(); 
+                        });
+                    };
+                    
+                    
+
+                
+        
+                checkAuthState();
+                
+                
+                      
+                            
 
 
+        // Function to show the modal and overlay
+                    function showModal() {
+                        document.getElementById('confirmationModal').style.display = 'block';
+                        document.getElementById('overlay').style.display = 'block';
+                    }
 
- // Function to show the modal and overlay
-            function showModal() {
-                document.getElementById('confirmationModal').style.display = 'block';
-                document.getElementById('overlay').style.display = 'block';
-            }
+                    // Function to hide the modal and overlay
+                    function hideModal() {
+                        document.getElementById('confirmationModal').style.display = 'none';
+                        document.getElementById('overlay').style.display = 'none';
+                    }
 
-            // Function to hide the modal and overlay
-            function hideModal() {
-                document.getElementById('confirmationModal').style.display = 'none';
-                document.getElementById('overlay').style.display = 'none';
-            }
+                    document.getElementById('dashboardLink').addEventListener('click', showModal);        
+                    
 
-            document.getElementById('dashboardLink').addEventListener('click', showModal);        
+                    
+           
+          
+          
+          
+          
+            function updateOrder() {
+                // Get the selected option from the dropdown
+                var selectedOption = document.getElementById("selectOption");
+                var selectedValue = selectedOption.options[selectedOption.selectedIndex].value;
             
+                // Update the content of the <p> element with the ID "Order"
+                document.getElementById("Order").textContent = "Selected Order: " + selectedValue;
+            }
+            window.updateOrder = updateOrder;
 
-
-
-
-
-
-
-
-
-
-            // Event listener for the "Yes" button in the modal
+          
+          
+          
             document.getElementById('yesButton').addEventListener('click', async () => {
-                // Get the buttonValue from the data attribute
-                const buttonValue = document.getElementById('confirmationModal').getAttribute('data-button-value');
-
                 try {
+                    // Get the selected option value
+                    const selectedOption = document.getElementById("selectOption");
+                    const selectedValue = selectedOption.options[selectedOption.selectedIndex].value;
+            
                     // Get the currently logged-in user
                     const user = auth.currentUser;
-
+            
                     if (user) {
-                        // Store the button value in Firestore subcollection
+                        // Store the selected value in Firestore subcollection
                         const userId = user.uid;
                         // Reference to the parent document
                         const parentDocRef = doc(db, 'userRecords', userId);
                         // Reference to the subcollection within the parent document
                         const subcollectionRef = collection(parentDocRef, 'history');
                         await addDoc(subcollectionRef, {
-                            value: buttonValue,
+                            value: selectedValue,
                             timestamp: new Date(),
                             status: 'pending',
                         });
-
-                        // Redirect to the link associated with the button
-                        const link = document.querySelector(`[data-value="${buttonValue}"]`).getAttribute('data-link');
-                        if (link) {
-                            // window.location.href = link;
-                            console.log("You clicked " + link);
-                        }
-
+            
                         // Display a success message
-                        console.log(`Button value "${buttonValue}" has been stored in Firestore`);
+                        console.log(`Selected value "${selectedValue}" has been stored in Firestore`);
+                        alert(`Your document "${selectedValue}" is ordered. Check dashboard for status`);
                     } else {
                         // User is not logged in, handle accordingly
                         alert('Please log in to place your order.');
@@ -112,13 +152,13 @@
                 } catch (error) {
                     // Handle any errors
                     console.error(error);
-                    alert('Error storing button value in Firestore.');
+                    alert('Error storing selected value in Firestore.');
                 }
-
+            
                 // Hide the modal
                 hideModal();
             });
-
+            
             // Event listener for the "No" button in the modal
             document.getElementById('noButton').addEventListener('click', () => {
                 // Hide the modal without taking any action
