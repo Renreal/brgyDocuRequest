@@ -49,9 +49,11 @@ ul{
     justify-content: space-between;
     align-items: center;
 }
+#profileImage img{
+    border-radius: 1rem;
+}
 .logo{
     position: relative;
-   
 }
 
 .logo img{
@@ -159,8 +161,14 @@ a img{
     overflow-y: scroll;
     width: 70vw;
     height: 50vh;
+    text-align: center;
 }
-
+#confirmationModal img{
+    width: 4rem;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
 
 /* Styling for the overlay background */
 #overlay {
@@ -290,4 +298,74 @@ a img{
 }
 .copyright{
     margin-top: 2rem;
+}
+.adminWrapper{
+    background-color: rgb(252, 252, 252);
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    overflow: auto;
+}
+.notif{
+    color: white;
+    background-color: red;
+    border-radius: 50%;
+    padding: 5px 10px;
+    position: relative;
+    right: 1rem;
+    top: 1rem;
+    font-size: 13px;
+}
+.mainItems{
+   /*  background-color: green; */
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    margin: 1rem 1rem;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+.mainItems span{
+    font-size: 2rem;
+    text-transform: uppercase;
+}
+.orders{
+    border-color: black;
+    border-style: solid;
+    margin: 3rem;
+    width: -webkit-fill-available;
+}
+.orders .label{
+    padding: 0.5rem;
+    color: white;
+    background-color:black;
+}
+.order-container {
+    
+    display: flex;
+    justify-content: space-between;
+    margin: 1rem 1rem;
+    border-bottom: 1px dotted black;
+    flex-direction: column;
+}
+.order-container img{
+    width: 1rem;
+}
+.type{
+    display: contents;
+}
+#info{
+    color:black;
+    font-weight: bold;
+}
+.action {
+    display: flex;
+    justify-content: space-between;
+    align-content: space-between;
+    flex-direction: row;
+    align-items: flex-start;
+    width: 11vw;
+    flex-wrap: wrap;
+    margin-right: 1rem;
 }

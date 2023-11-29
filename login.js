@@ -9,11 +9,10 @@
                     signOut
                 } from "https://www.gstatic.com/firebasejs/10.3.1/firebase-auth.js";
                 import {
-                    getFirestore,
-                    collection,
-                    addDoc,
+                    getFirestore, collection, addDoc, getDocs, query, where,
                     } from 'https://www.gstatic.com/firebasejs/10.3.1/firebase-firestore.js';
-        
+                    import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.3.1/firebase-storage.js";
+
 // Your web app's Firebase configuration
                 const firebaseConfig = {
                   apiKey: "AIzaSyDHWn2BsQUOLs4LdGeRwY9HqL-t9zlYEjQ",
@@ -29,7 +28,7 @@
                    const app = initializeApp(firebaseConfig);
                     const auth = getAuth(app);
                     const db = getFirestore(app);
-
+                    const storage = getStorage(app);
 
 
                     const userEmailSignIn = document.querySelector("#userEmailSignIn"); 
@@ -56,9 +55,35 @@
                     });
                
 
-
-
 //////////user sign up========================================
+                                     /* image placeholder */       
+                        const fileInput = document.getElementById("fileInput");
+                        const uploadedImage = document.getElementById("uploadedImage");
+
+                        fileInput.addEventListener("change", (e) => {
+                        const file = e.target.files[0];
+                        if (file) {
+                            const reader = new FileReader();
+                            reader.onload = function (e) {
+                            uploadedImage.src = e.target.result;
+                            };
+                            reader.readAsDataURL(file);
+                        }
+                        });
+
+                        const uploadImageToStorage = async (file, userId) => {
+                            // Create a reference to the Firebase Storage location
+                            const storageRef = ref(storage, `userImages/${userId}/${file.name}`);
+                          
+                            // Upload the file to Firebase Storage
+                            const snapshot = await uploadBytes(storageRef, file);
+                          
+                            // Get the download URL of the uploaded file
+                            const downloadURL = await getDownloadURL(snapshot.ref);
+                          
+                            return downloadURL;
+                          };
+
                     const userSignUp = async () => {
                     try {
                         const signUpEmail = userEmailSignUp.value;
@@ -79,10 +104,12 @@
                         const userCredential = await createUserWithEmailAndPassword(auth, signUpEmail, signUpPassword);
                         
                         const user = userCredential.user;
-                         const userId = user.uid;
+                        const userId = user.uid;
 
-// Store user data in Firestore
-                        
+    // Store user data in Firestore
+                        const file = fileInput.files[0];
+                        const imageURL = await uploadImageToStorage(file, userId);
+                       
                         const userDocRef = await addDoc(collection(db, 'userRecords'), {
                         email: signUpEmail,
                         name: firstName,
@@ -98,7 +125,8 @@
                         work: Occupation,
                         contactNum: contact,
                         password: signUpPassword, 
-                        userId: userId
+                        userId: userId,
+                        imageURL: imageURL,
                         });
                         alert("Registered Successfully!");
                         location.replace("LandingPage.html");
@@ -117,42 +145,59 @@
                     }
                     };
 
-                  
 
-
-
-                
 //=======user sign IN=============//
 
 
 
-            const userSignIn = async() => {
-            const signInEmail = userEmailSignIn.value;
-            const signInPassword = userPasswordSignIn.value;
-            signInWithEmailAndPassword(auth, signInEmail, signInPassword)
-            .then((userCredential) => { 
-                const user = userCredential.user;
-                alert("You have signed in successfully!");
-                location.replace("LandingPage.html");
-            })
-            .catch((error) =>{
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                console.log(errorCode + errorMessage)
+                    const userSignIn = async () => {
+                        const signInEmail = userEmailSignIn.value;
+                        const signInPassword = userPasswordSignIn.value;
+                    
+                        try {
+                        const userCredential = await signInWithEmailAndPassword(auth, signInEmail, signInPassword);
+                        const user = userCredential.user;
+                    
+                        // Check if the user is an admin
+                        const isAdmin = await checkIfAdmin(user.email);
+                    
+                        alert("You have signed in successfully!");
+                    
+                        if (isAdmin) {
+                            // Redirect to admin.html if the user is an admin
 
-                if(errorCode === "auth/invalid-email"){
-                    alert("Please enter a valid email");
-                    }
-                if(errorCode=== "auth/wrong-password"){
-                    alert("You have entered a wrong password")
-                }
-                    else{
-                    alert("error" + errorMessage);
-                    console.log(errorCode + errorMessage)
-                    } 
-            });
-            }
-
+                            location.replace("admin.html");
+                        } else {
+                            // Redirect to LandingPage.html for regular users
+                            location.replace("LandingPage.html");
+                        }
+                        } catch (error) {
+                        const errorCode = error.code;
+                        const errorMessage = error.message;
+                        console.log(errorCode + errorMessage);
+                    
+                        if (errorCode === "auth/invalid-email") {
+                            alert("Please enter a valid email");
+                        } else if (errorCode === "auth/wrong-password") {
+                            alert("You have entered a wrong password");
+                        } else {
+                            alert("Error: " + errorMessage);
+                            console.log(errorCode + errorMessage);
+                        }
+                        }
+                    };
+                    
+                    // Function to check if the user is an admin
+                    const checkIfAdmin = async (email) => {
+                        try {
+                        const querySnapshot = await getDocs(query(collection(db, 'admins'), where('email', '==', email)));
+                        return !querySnapshot.empty;
+                        } catch (error) {
+                        console.error("Error checking if admin:", error);
+                        return false;
+                        }
+                    };
+  
                        
             signUpButton.addEventListener('click', userSignUp);
             signInButton.addEventListener('click', userSignIn);

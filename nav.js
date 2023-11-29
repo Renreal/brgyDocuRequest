@@ -35,7 +35,7 @@ const navItemsContainer = document.getElementById('navItems');
 
 
                 // Function to update the navigation items based on user authentication state
-        const updateNavItems = (user) => {
+            const updateNavItems = async (user) => {
             if (user) {
                 // User is logged in
                 navItemsContainer.innerHTML = `
@@ -43,15 +43,27 @@ const navItemsContainer = document.getElementById('navItems');
                     <a href="newDashboard.html">Dashboard</a>
                     <a href="/LandingPage.html">Services</a>
                     <a id="signOutButton">Sign Out</a>
-                    <a href="newDashboard.html"><img src="personIcon.svg"></a>
+                    <a href="" id="profileImage"><img src="personIcon.svg">
+                    <span class="notif" id="notif">3</span></a>
                 `;
                 const signOutButton = document.getElementById('signOutButton');
                 signOutButton.addEventListener('click', userSignout);
+               
+                // Find the user document in Firestore
+                const querySnapshot = await getDocs(query(collection(db, 'userRecords'), where('email', '==', user.email)));
+    
+                if (!querySnapshot.empty) {
+                    const userDocument = querySnapshot.docs[0].data();
+                    const profileImage = document.getElementById('profileImage');
+                     // Set the image src to the retrieved imageURL
+                    if (userDocument.imageURL) {
+                        profileImage.querySelector('img').src = userDocument.imageURL;
+                    }
+                }
             } else {
                 // User is logged out
                 navItemsContainer.innerHTML = `
                     <a href="#about">About Us</a>
-                    <a href="#">Brgy Updates</a>
                     <a href="/Index.html">Services</a>
                     <a href="/Index.html">Login</a>
                     <a href="/Index.html">Signup</a>
@@ -61,10 +73,9 @@ const navItemsContainer = document.getElementById('navItems');
         };
 
         
-                //signout
-                const userSignout =async() => {
-                    await signOut(auth);
-            }
+        const userSignout =async() => {
+            await signOut(auth);
+    }
 
 //tracks the user's st wether they are logged in or logged out
 const checkAuthState = async() => { 

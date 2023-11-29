@@ -64,6 +64,8 @@
                                         document.getElementById('status').value = userData.status || '';
                                         document.getElementById('work').value = userData.work || '';
                                         document.getElementById('contact').value = userData.contactNum || '';
+                                        const profileImage = document.getElementById('confirmationModal');
+                                        profileImage.querySelector('img').src = userData.imageURL;
                                     });
                                 } else {
                                     console.log("No matching user found in Firestore");
